@@ -10,7 +10,7 @@ fn main() {
     io::stdin().read_line(&mut element).expect("Failed to read full element name! Exiting");
     io::stdin().read_line(&mut symbol).expect("Failed to read symbol! Exiting");
 
-    if assert_eq!(check(&element, &symbol),true){
+    if check(&element, &symbol) == true{
         println!("Symbol Works");
     } else{
         println!("Does not work, try again.");
@@ -19,11 +19,14 @@ fn main() {
 
 fn check(element: &str, symbol: &str) -> bool{
     for character in element.char_indicies(){
-        if assert_eq!(character.1.to_lowercase(), symbol.chars().nth(0).to_lowercase()){
+        if character.1.to_lowercase() == symbol.chars().nth(0).to_lowercase(){
             let splitTup = element.split_at(character.0 * 4); //assumes char is four bytes and is in latin based UTF-8, won't work with non-UTF8
             for newChar in splitTup.1.chars(){
-                if assert_eq!(newChar.to_lowercase(), symbol.chars().nth(1).to_lowercase()){
+                if newChar.to_lowercase() == symbol.chars().nth(1).to_lowercase(){
                     return true;
+                }
+                else{
+                    return false;
                 }
             }
         }

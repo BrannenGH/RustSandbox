@@ -2,6 +2,7 @@ use std::io;
 use std::str;
 use std::char;
 use std::slice;
+use std::string::String;
 
 fn main() {
     let mut element = String::new();
@@ -18,11 +19,11 @@ fn main() {
 }
 
 fn check(element: &str, symbol: &str) -> bool{
-    for character in element.char_indicies(){
-        if character.1.to_lowercase() == symbol.chars().nth(0).to_lowercase(){
-            let splitTup = element.split_at(character.0 * 4); //assumes char is four bytes and is in latin based UTF-8, won't work with non-UTF8
-            for newChar in splitTup.1.chars(){
-                if newChar.to_lowercase() == symbol.chars().nth(1).to_lowercase(){
+    for character in element.char_indices(){
+        if character.1.to_lowercase().last().unwrap() == symbol.chars().nth(0).unwrap().to_lowercase().last().unwrap(){
+            let newStrs = element.split_at(character.0);
+            for newChar in newStrs.1.chars(){
+                if newChar.to_lowercase().last().unwrap() == symbol.chars().nth(1).unwrap().to_lowercase().last().unwrap(){
                     return true;
                 }
                 else{

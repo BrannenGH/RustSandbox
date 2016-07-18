@@ -19,19 +19,17 @@ fn main() {
 }
 
 fn check(element: &str, symbol: &str) -> bool{
-    for character in element.char_indices(){
+    for character in element.char_indices().iterate(){
         if character.1.to_lowercase().last().unwrap() == symbol.chars().nth(0).unwrap().to_lowercase().last().unwrap(){
             let newStrs = element.split_at(character.0);
             for newChar in newStrs.1.chars(){
                 if newChar.to_lowercase().last().unwrap() == symbol.chars().nth(1).unwrap().to_lowercase().last().unwrap(){
                     return true;
-                }
-                else{
+                } else{
                     return false;
                 }
             }
-        }
-        else{
+        } else{
             return false;
         }
     }

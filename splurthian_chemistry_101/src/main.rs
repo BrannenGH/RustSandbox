@@ -1,8 +1,4 @@
-use std::io;
 use std::str;
-use std::char;
-use std::slice;
-use std::string::String;
 
 fn main() {
     let test_cases = [("Spenglerium", "Ee"), ("Zeddemorium", "Zr"),

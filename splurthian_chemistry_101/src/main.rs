@@ -5,32 +5,31 @@ use std::slice;
 use std::string::String;
 
 fn main() {
-    let mut element = String::new();
-    let mut symbol = String::new();
-
-    io::stdin().read_line(&mut element).expect("Failed to read full element name! Exiting");
-    io::stdin().read_line(&mut symbol).expect("Failed to read symbol! Exiting");
-
-    if check(&element, &symbol) == true{
-        println!("Symbol Works");
-    } else{
-        println!("Does not work, try again.");
+    let test_cases = [("Spenglerium", "Ee"), ("Zeddemorium", "Zr"),
+     ("Venkmine", "Kn"), ("Stantzon", "Zt"), ("Melintzum", "Nn"), ("Tullium", "Ty")];
+    for test_case in test_cases.iter(){
+        if check(test_case.0, test_case.1) == true{
+            println!("The symbol {} works for {}", test_case.1, test_case.0);
+        } else{
+            println!("The symbol {} does not work for {}", test_case.1, test_case.0);
+        }
     }
 }
 
 fn check(element: &str, symbol: &str) -> bool{
-    for character in element.char_indices().iterate(){
-        if character.1.to_lowercase().last().unwrap() == symbol.chars().nth(0).unwrap().to_lowercase().last().unwrap(){
-            let newStrs = element.split_at(character.0);
-            for newChar in newStrs.1.chars(){
-                if newChar.to_lowercase().last().unwrap() == symbol.chars().nth(1).unwrap().to_lowercase().last().unwrap(){
-                    return true;
-                } else{
-                    return false;
+    let first_letter = symbol.chars().nth(0).unwrap().to_lowercase().nth(0).unwrap();
+    let second_letter = symbol.chars().nth(1).unwrap().to_lowercase().nth(0).unwrap();
+    let mut result: bool = false;
+    for letter in element.char_indices(){
+        if letter.1.to_lowercase().nth(0).unwrap() == first_letter{
+            let new_strs = element.split_at(letter.0 + 1);
+            //Will not work for non-one byte strings, I will try to implement this
+            for character in new_strs.1.chars(){
+                if character == second_letter{
+                    result = true;
                 }
             }
-        } else{
-            return false;
         }
     }
+    return result;
 }
